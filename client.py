@@ -12,6 +12,7 @@ context = zmq.Context()
 socket = context.socket(zmq.PAIR)
 socket.connect("tcp://localhost:%s" % port)
 
+
 def run(plan_name, args, kwargs):
     to_send = json.dumps({"plan_name": plan_name, "plan_args": args, "plan_kwargs": kwargs}).encode()
     socket.send(to_send)
@@ -21,4 +22,6 @@ def run(plan_name, args, kwargs):
         decoded_msg = json.loads(msg.decode())
         print('received', decoded_msg)
 
-run("scan", "(motor, 1, 5, 5)", "{}")
+
+if __name__ == "__main__":
+    run("scan", "([det], motor, 1, 5, 5)", "{}")
